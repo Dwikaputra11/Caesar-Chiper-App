@@ -210,4 +210,80 @@ class Security {
 
     return result;
   }
+
+  static String encryptScytale(String plaintext, int numberOfTurns) {
+    int length = plaintext.length;
+    int numRows = (length + numberOfTurns - 1) ~/ numberOfTurns;
+    List<List<String>> grid =
+        List.generate(numRows, (row) => List.filled(numberOfTurns, ""));
+
+    int index = 0;
+    for (int col = 0; col < numberOfTurns; col++) {
+      for (int row = 0; row < numRows; row++) {
+        grid[row][col] = (index < length) ? plaintext[index] : 'Z';
+        index++;
+      }
+    }
+
+    String encryptedText = '';
+    for (int row = 0; row < numRows; row++) {
+      for (int col = 0; col < numberOfTurns; col++) {
+        if (grid[row][col].isNotEmpty) {
+          encryptedText += grid[row][col];
+        }
+      }
+    }
+
+    return encryptedText;
+  }
+
+  static String decryptScytale(String ciphertext, int numberOfTurns) {
+    int length = ciphertext.length;
+    int numRows = (length + numberOfTurns - 1) ~/ numberOfTurns;
+
+    List<List<String>> grid = List.generate(numRows, (row) {
+      return List.filled(numberOfTurns, "");
+    });
+
+    int index = 0;
+    for (int row = 0; row < numRows; row++) {
+      for (int col = 0; col < numberOfTurns; col++) {
+        grid[row][col] = (index < length) ? ciphertext[index] : 'Z';
+        index++;
+      }
+    }
+
+    String decryptedText = '';
+    for (int col = 0; col < numberOfTurns; col++) {
+      for (int row = 0; row < numRows; row++) {
+        if (grid[row][col].isNotEmpty) {
+          decryptedText += grid[row][col];
+        }
+      }
+    }
+
+    decryptedText = decryptedText.replaceAll('Z', '');
+
+    return decryptedText;
+  }
+
+  static encryptSuper(String text, int key) {
+    var result = '';
+
+    result = encryptCaesar(text, key);
+    result = encryptRailFence(result, key);
+    result = encryptScytale(result, key);
+
+    return result;
+  }
+
+  static decryptSuper(String text, int key) {
+    var result = '';
+
+    result = decryptScytale(text, key);
+    result = decryptRailFence(result, key);
+    result = decryptCaesar(result, key);
+
+    return result;
+  }
 }

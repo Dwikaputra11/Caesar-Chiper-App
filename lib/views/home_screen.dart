@@ -19,8 +19,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    String resultencryption = '';
-    String resultdecryption = '';
+    String result = '';
 
     List<DropdownMenuEntry<int>> menuItems = [
       const DropdownMenuEntry(value: 1, label: "Caesar Chiper"),
@@ -45,6 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ans = Security.encryptRailFence(txt, shift);
             break;
           case 4:
+            ans = Security.encryptSuper(txt, shift);
             break;
           default:
         }
@@ -68,6 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ans = Security.decryptRailFence(txt, shift);
             break;
           case 4:
+            ans = Security.decryptSuper(txt, shift);
             break;
           default:
         }
@@ -103,7 +104,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     setState(() {
                       method = value!;
                       isKeywordVisible = method == 2;
-                      print(isKeywordVisible);
                     });
                   },
                 ),
@@ -169,7 +169,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   controller: etAnswer,
                   enabled: false,
                   decoration: InputDecoration(
-                    hintText: resultencryption,
+                    hintText: result,
                   ),
                 ),
               ],
