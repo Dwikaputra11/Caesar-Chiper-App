@@ -12,7 +12,8 @@ class _CaesarCipherAppState extends State<CaesarCipherApp> {
   String _resultencryption = '';
   String _resultdecryption = '';
 
-  void _encrypt() { // c = p+k mod 26
+  void _encrypt() {
+    // c = p+k mod 26
     String plainText = _controller.text;
     String cipherText = '';
     for (int i = 0; i < plainText.length; i++) {
@@ -38,8 +39,9 @@ class _CaesarCipherAppState extends State<CaesarCipherApp> {
       _resultencryption = cipherText;
     });
   }
-  
-  void _Decrypt() { // p = c+k mod 26
+
+  void _Decrypt() {
+    // p = c+k mod 26
     String cipherText = _controller2.text;
     String plainText = '';
     for (int i = 0; i < cipherText.length; i++) {
@@ -57,7 +59,7 @@ class _CaesarCipherAppState extends State<CaesarCipherApp> {
       plainText += char;
     }
     setState(() {
-      _resultdecryption  = plainText;
+      _resultdecryption = plainText;
     });
   }
 
@@ -73,13 +75,14 @@ class _CaesarCipherAppState extends State<CaesarCipherApp> {
         child: Column(
           children: [
             TextField(
-
               controller: _controller,
               decoration: InputDecoration(
                 hintText: 'Enter a message to encrypt',
               ),
             ),
-            SizedBox(height: 20,),
+            SizedBox(
+              height: 20,
+            ),
             TextField(
               controller: _controller2,
               decoration: InputDecoration(
@@ -95,9 +98,9 @@ class _CaesarCipherAppState extends State<CaesarCipherApp> {
                   value: _shift,
                   items: List.generate(26, (i) => i + 1)
                       .map((i) => DropdownMenuItem(
-                    value: i,
-                    child: Text(i.toString()),
-                  ))
+                            value: i,
+                            child: Text(i.toString()),
+                          ))
                       .toList(),
                   onChanged: (value) {
                     setState(() {
@@ -113,48 +116,45 @@ class _CaesarCipherAppState extends State<CaesarCipherApp> {
                 ElevatedButton(
                   onPressed: _encrypt,
                   child: Text('Encrypt'),
-
                 ),
-                SizedBox(width: 150,),
+                SizedBox(
+                  width: 150,
+                ),
                 ElevatedButton(
                   onPressed: _Decrypt,
                   child: Text('Decrypt'),
-
                 ),
               ],
             ),
-
-
             Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-              SizedBox(height: 10.0),
-              Text('Encrypt'),
-              TextField(
-                enabled: false,
-                decoration: InputDecoration(
-                  hintText: _resultencryption,
+                SizedBox(height: 10.0),
+                Text('Encrypt'),
+                TextField(
+                  enabled: false,
+                  decoration: InputDecoration(
+                    hintText: _resultencryption,
+                  ),
                 ),
-              ),
-            SizedBox(height: 8.0),
-            Text('Decrypt'),
-                SingleChildScrollView(child:Column(
+                SizedBox(height: 8.0),
+                Text('Decrypt'),
+                SingleChildScrollView(
+                    child: Column(
                   children: [
-                  TextField(
-                    enabled: false,
-                    decoration: InputDecoration(
-                      hintText: _resultdecryption,
+                    TextField(
+                      enabled: false,
+                      decoration: InputDecoration(
+                        hintText: _resultdecryption,
                       ),
                     ),
                   ],
-                )
-              ),
-            ],
-          )
-        ],
+                )),
+              ],
+            )
+          ],
+        ),
       ),
-    ),
-  );
+    );
+  }
 }
-}
-

@@ -1,5 +1,94 @@
 class Security {
-  String encryptRailFence(String text, int key) {
+  static String encryptCaesar(String text, int key) {
+    String cipherText = '';
+    for (int i = 0; i < text.length; i++) {
+      String char = text[i];
+      if (char.contains(RegExp(r'[A-Za-z]'))) {
+        // Convert the character to its ASCII code
+        int asciiCode = char.codeUnitAt(0);
+        // Determine if the character is uppercase or lowercase
+        if (char == char.toUpperCase()) {
+          // Apply the shift to the ASCII code of the character, wrapping around if necessary
+          int shiftedCode = (asciiCode - 65 + key) % 26 + 65;
+          // Convert the shifted ASCII code back to a character
+          char = String.fromCharCode(shiftedCode);
+        } else {
+          int shiftedCode = (asciiCode - 97 + key) % 26 + 97;
+          char = String.fromCharCode(shiftedCode);
+        }
+      }
+      // Append the encrypted character to the cipher text
+      cipherText += char;
+    }
+
+    return cipherText;
+  }
+
+  static decryptCaesar(String text, int key) {
+    String cipherText = text;
+    String plainText = '';
+    for (int i = 0; i < cipherText.length; i++) {
+      String char = cipherText[i];
+      if (char.contains(RegExp(r'[A-Za-z]'))) {
+        int asciiCode = char.codeUnitAt(0);
+        if (char == char.toUpperCase()) {
+          int shiftedCode = (asciiCode - 65 - key) % 26 + 65;
+          char = String.fromCharCode(shiftedCode);
+        } else {
+          int shiftedCode = (asciiCode - 97 - key) % 26 + 97;
+          char = String.fromCharCode(shiftedCode);
+        }
+      }
+      plainText += char;
+    }
+    return plainText;
+  }
+
+  static String generateKey(String str, String key) {
+    int x = str.length;
+
+    for (int i = 0; true; i++) {
+      if (x == i) {
+        i = 0;
+      }
+      if (key.length == str.length) {
+        break;
+      }
+      key += key[i];
+    }
+    return key;
+  }
+
+  static encryptVigenere(String text, String key) {
+    String cipherText = '';
+
+    for (int i = 0; i < text.length; i++) {
+      // Converting in range 0-25
+      int x = (text.codeUnitAt(i) + key.codeUnitAt(i)) % 26;
+
+      // Convert into alphabets (ASCII)
+      x += 'A'.codeUnitAt(0);
+
+      cipherText += String.fromCharCode(x);
+    }
+    return cipherText;
+  }
+
+  static decryptVigenere(String text, String key) {
+    String origText = '';
+
+    for (int i = 0; i < text.length; i++) {
+      // Converting in range 0-25
+      int x = (text.codeUnitAt(i) - key.codeUnitAt(i) + 26) % 26;
+
+      // Convert into alphabets (ASCII)
+      x += 'A'.codeUnitAt(0);
+      origText += String.fromCharCode(x);
+    }
+    return origText;
+  }
+
+  static String encryptRailFence(String text, int key) {
     // Create the matrix to cipher plain text
     // key = rows, text.length = columns
     List<List<String>> rail =
@@ -40,7 +129,7 @@ class Security {
     return result;
   }
 
-  String decryptRailFence(String cipher, int key) {
+  static String decryptRailFence(String cipher, int key) {
     // Create the matrix to decipher plain text
     // key = rows, cipher.length = columns
     List<List<String>> rail =

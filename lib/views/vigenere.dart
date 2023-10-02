@@ -39,9 +39,8 @@ class _VigenereCipherPageState extends State<VigenereCipherPage> {
       if (_isLetter(text[i])) {
         String base = _isUppercase(text[i]) ? 'A' : 'a';
         int charCode = base.codeUnitAt(0);
-        int shift =
-            keyword[i % keyword.length].toUpperCase().codeUnitAt(0) -
-                'A'.codeUnitAt(0);
+        int shift = keyword[i % keyword.length].toUpperCase().codeUnitAt(0) -
+            'A'.codeUnitAt(0);
         result += String.fromCharCode(
             (charCode + (text.codeUnitAt(i) - charCode + shift) % 26));
       } else {
@@ -51,17 +50,14 @@ class _VigenereCipherPageState extends State<VigenereCipherPage> {
     return result;
   }
 
-  
-
   String _decrypt(String text, String keyword) {
     String result = "";
     for (int i = 0; i < text.length; i++) {
       if (_isLetter(text[i])) {
         String base = _isUppercase(text[i]) ? 'A' : 'a';
         int charCode = base.codeUnitAt(0);
-        int shift =
-            keyword[i % keyword.length].toUpperCase().codeUnitAt(0) -
-                'A'.codeUnitAt(0);
+        int shift = keyword[i % keyword.length].toUpperCase().codeUnitAt(0) -
+            'A'.codeUnitAt(0);
         result += String.fromCharCode(
             (charCode + (text.codeUnitAt(i) - charCode - shift + 26) % 26));
       } else {
@@ -95,9 +91,7 @@ class _VigenereCipherPageState extends State<VigenereCipherPage> {
                 labelText: 'Keyword',
               ),
             ),
-
             SizedBox(height: 16.0),
-
             ElevatedButton(
               onPressed: () {
                 String inputText = _textEditingController.text;
@@ -123,7 +117,6 @@ class _VigenereCipherPageState extends State<VigenereCipherPage> {
               },
               child: Text('Enkripsi'),
             ),
-
             ElevatedButton(
               onPressed: () {
                 String inputText = _textEditingController.text;
@@ -155,7 +148,3 @@ class _VigenereCipherPageState extends State<VigenereCipherPage> {
     );
   }
 }
-
-
-
-

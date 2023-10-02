@@ -1,6 +1,4 @@
-import 'package:caesar_chiper_app/views/caesar.dart';
 import 'package:caesar_chiper_app/views/home_screen.dart';
-import 'package:caesar_chiper_app/views/vigenere.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -19,7 +17,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: CaesarCipherApp(),
+      home: const HomeScreen(),
     );
   }
 }
