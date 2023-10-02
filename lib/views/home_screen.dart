@@ -38,8 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ans = Security.encryptCaesar(txt, shift);
             break;
           case 2:
-            var txtKeyword = etKeyword.text;
-            keyword = Security.generateKey(txt, txtKeyword);
+            keyword = etKeyword.text;
             ans = Security.encryptVigenere(txt, keyword);
             break;
           case 3:
@@ -62,8 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ans = Security.decryptCaesar(txt, shift);
             break;
           case 2:
-            var txtKeyword = etKeyword.text;
-            keyword = Security.generateKey(txt, txtKeyword);
+            keyword = etKeyword.text;
             ans = Security.decryptVigenere(txt, keyword);
             break;
           case 3:

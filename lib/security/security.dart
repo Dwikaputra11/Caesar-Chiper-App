@@ -60,32 +60,45 @@ class Security {
   }
 
   static encryptVigenere(String text, String key) {
-    String cipherText = '';
+    text = text.toUpperCase();
+    key = key.toUpperCase();
+    String encryptedText = '';
 
     for (int i = 0; i < text.length; i++) {
-      // Converting in range 0-25
-      int x = (text.codeUnitAt(i) + key.codeUnitAt(i)) % 26;
-
-      // Convert into alphabets (ASCII)
-      x += 'A'.codeUnitAt(0);
-
-      cipherText += String.fromCharCode(x);
+      if (text.codeUnitAt(i) >= 'A'.codeUnitAt(0) &&
+          text.codeUnitAt(i) <= 'Z'.codeUnitAt(0)) {
+        int plainChar = text.codeUnitAt(i) - 'A'.codeUnitAt(0);
+        int keyChar = key.codeUnitAt(i % key.length) - 'A'.codeUnitAt(0);
+        int encryptedChar = (plainChar + keyChar) % 26;
+        encryptedText += String.fromCharCode(encryptedChar + 'A'.codeUnitAt(0));
+      } else {
+        // If the character is not a letter, leave it unchanged.
+        encryptedText += text[i];
+      }
     }
-    return cipherText;
+
+    return encryptedText;
   }
 
   static decryptVigenere(String text, String key) {
-    String origText = '';
+    text = text.toUpperCase();
+    key = key.toUpperCase();
+    String decryptedText = '';
 
     for (int i = 0; i < text.length; i++) {
-      // Converting in range 0-25
-      int x = (text.codeUnitAt(i) - key.codeUnitAt(i) + 26) % 26;
-
-      // Convert into alphabets (ASCII)
-      x += 'A'.codeUnitAt(0);
-      origText += String.fromCharCode(x);
+      if (text.codeUnitAt(i) >= 'A'.codeUnitAt(0) &&
+          text.codeUnitAt(i) <= 'Z'.codeUnitAt(0)) {
+        int cipherChar = text.codeUnitAt(i) - 'A'.codeUnitAt(0);
+        int keyChar = key.codeUnitAt(i % key.length) - 'A'.codeUnitAt(0);
+        int decryptedChar = (cipherChar - keyChar + 26) % 26;
+        decryptedText += String.fromCharCode(decryptedChar + 'A'.codeUnitAt(0));
+      } else {
+        // If the character is not a letter, leave it unchanged.
+        decryptedText += text[i];
+      }
     }
-    return origText;
+
+    return decryptedText;
   }
 
   static String encryptRailFence(String text, int key) {
